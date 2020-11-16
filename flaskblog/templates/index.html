@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %} О нас {% endblock %}
+
+    {% block content %}
+        <header>
+            <div class="container">
+                <img class="avatars" src="static/images/avatar.jpg">
+                <div class="information">
+                    <h1 class="name">Mansur Musaev</h1>
+                    <h2 class="desc">Web App Developer</h2>
+                    <a class="btn btn-cta-primary pull-right" href="http://themes.3rdwavemedia.com/" target="_blank"><i class="fa fa-paper-plane"></i> Contact Me</a>
+                    <!-- <ul class="social">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-github-square" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul> -->
+                </div>
+                <div class="account">
+                    <div role="main" class="container">
+                        <div class="col-md-8">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                          {% if messages %}
+                            {% for category, message in messages %}
+                              <div class="alert alert-{{ category }}">
+                                {{ message }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                        {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <article>
+                <form  action="{{ url_for('index') }}" method="post">
+                    <input type="text" name="name" placeholder="Введите ваше Имя">
+                    <input type="text" name="mail" placeholder="Введите ваш @mail">
+                    <input type="text" name="commen" placeholder="Оставьте отзыв">
+                    <button>Отправить</button>
+                </form>
+            </article>
+            <article>
+                <ul>
+                    {% for note in notes %}s
+                        <li>{{ note }}</li>
+                    {% endfor %}
+                </ul>
+                <ul>
+                    {% for flight in flights %}
+                            <li class="li">{{ flight.name }} : {{ flight.commen }}</li>
+                            <!-- {{ "%s %s"|format(flight.id, flight.origin) }}[1:-1]|replace('"', ' ') -->
+                    {% endfor %}
+                </ul>
+            </article>
+        </main>
+        <footer>
+            <a href="{{ url_for('about') }}">На главную</a>
+        </footer>
+    {% endblock %}

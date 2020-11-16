@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+<title>{% block title %} Document {% endblock %}</title>
+</head>
+<body>
+    {% block content %}
+        <header>
+            <div class="container">
+                <img class="avatars" src="static/images/avatar.jpg">
+                <div class="information">
+                    <h1 class="name">Mansur Musaev</h1>
+                    <h2 class="desc">Web App Developer</h2>
+                    <a class="btn btn-cta-primary pull-right" href="http://themes.3rdwavemedia.com/" target="_blank"><i class="fa fa-paper-plane"></i> Contact Me</a>
+                    <!-- <ul class="social">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-github-square" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul> -->
+                </div>
+                <div class="account">
+                    <div role="main" class="container">
+                        <div class="col-md-8">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                          {% if messages %}
+                            {% for category, message in messages %}
+                              <div class="alert alert-{{ category }}">
+                                {{ message }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                        {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <nav>
+                <a href="{{ url_for('index') }}">Контакты</a>
+                <a href="{{ url_for('weather') }}">Погода</a>
+                <a href="{{ url_for('register') }}">Регистрация</a>
+        </nav>
+        <div class="sidebar">
+            <div class="row_left">
+                <aside class="aboutme">
+                    ASIDE
+                </aside>
+                <aside class="project">
+                    ASIDE
+                </aside>
+            </div>
+            <div class="row_right">
+                <aside class="skills">
+                    ASIDE
+                </aside>
+                <aside class="adressme">
+                    ASIDE
+                </aside>
+            </div>
+        </div>
+        <!-- <main>
+            <article>
+                ARTICLE
+            </article>
+            <article>
+                ARTICLE
+            </article>
+        </main> -->
+        <footer>
+            FOOTER
+        </footer>
+    {% endblock %}
+</body>
+</html>

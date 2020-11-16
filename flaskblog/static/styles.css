@@ -1,0 +1,135 @@
+nav, .sidebar, main, article, footer{
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+}
+
+nav, .sidebar, main, footer {
+  width: 85%;
+  margin: auto;
+}
+
+body {
+  background: #DAE3E7;
+  margin: auto;
+}
+
+header {
+  background: #f5f5f5;
+  padding: 30px 0;
+}
+
+.container{
+  margin: 0px;
+  margin-left: 100px;
+  overflow: hidden;
+}
+
+.avatars{
+  float: left;
+  margin-right: 30px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.information {
+  float: left;
+}
+
+.name {
+  color: #49515a;
+  font-size: 38px;
+  margin-bottom: 5px;
+  margin-top: 30px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+.desc {
+  color: #778492;
+  font-family: "Lato", arial, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.account {
+  float: right;
+  margin-top: 60px;
+}
+
+nav, footer{
+  background-color: fuchsia;
+  padding: 30px 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.sidebar {
+  overflow: hidden;
+}
+
+.aboutme, .project, .skills, .adressme {
+  overflow: hidden;
+  box-sizing: border-box;
+  float: left;
+}
+
+.row_left{
+  width: 70%;
+  float: left;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.aboutme {
+  width: 880px;
+  height: 330px;
+  margin-bottom: 30px;
+  margin-right: 30px;
+}
+
+.project {
+  width: 880px;
+  height: 300px;
+  margin-bottom: 30px;
+}
+
+.row_right {
+  width: 30%;
+  float: left;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.skills {
+  width: 380px;
+  height: 180px;
+  margin-bottom: 30px;
+  margin-right: 30px;
+}
+
+.adressme {
+  width: 380px;
+  height: 450px;
+}
+
+aside {
+  background-color: cadetblue;
+}
+
+main {
+  background-color: chartreuse;
+  overflow: hidden;
+}
+
+article {
+  background-color: darkgray;
+}
+
+footer {
+  background-color: darkgray;
+  overflow: auto;
+}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %} О нас {% endblock %}
+
+    {% block content %}
+        <header>
+            <div class="container">
+                <img class="avatars" src="static/images/avatar.jpg">
+                <div class="information">
+                    <h1 class="name">Mansur Musaev</h1>
+                    <h2 class="desc">Web App Developer</h2>
+                    <a class="btn btn-cta-primary pull-right" href="http://themes.3rdwavemedia.com/" target="_blank"><i class="fa fa-paper-plane"></i> Contact Me</a>
+                    <!-- <ul class="social">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-github-square" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul> -->
+                </div>
+            </div>
+        </header>
+        <main>
+            <article>
+                <section class="weather_two_box">
+                    <article class="weather">
+                        Погода в Грозном,{{ text }}!
+                    </article>
+                </section>
+                    <article id="8b2d2a904f0a28449a3baa8bf9d513b0" class="ww-informers-box-854753">
+                        <p class="ww-informers-box-854754">
+                            <a href="https://world-weather.ru/pogoda/russia/moscow/7days/">Москва - погода</a>
+                            <br><a href="https://world-weather.ru/pogoda/russia/voronezh/">https://world-weather.ru/pogoda/russia/voronezh/</a>
+                        </p>
+                    </article>
+                    <script async type="text/javascript" charset="utf-8" src="https://world-weather.ru/wwinformer.php?userid=8b2d2a904f0a28449a3baa8bf9d513b0"></script>
+                    <style>.ww-informers-box-854754
+                        {-webkit-animation-name:ww-informers54;animation-name:ww-informers54;-webkit-animation-duration:1.5s;animation-duration:1.5s;
+                        white-space:nowrap;overflow:hidden;-o-text-overflow:ellipsis;text-overflow:ellipsis;font-size:12px;font-family:Arial;line-height:18px;text-align:center
+                        }
+                        @-webkit-keyframes ww-informers54{0%,80%{opacity:0}100%{opacity:1}}
+                        @keyframes ww-informers54{0%,80%{opacity:0}100%{opacity:1}}
+                    </style>
+            </article>
+        </main>
+        <footer>
+            <a href="{{ url_for('about') }}">На главную</a>
+        </footer>
+    {% endblock %}
+
+
+                                             <!-- ПОГОДА ГРОЗНЫЙ -->
+                        <!-- <article id="a1d2bd486864c86dd3357ef023bb2406" class="ww-informers-box-854753">
+                        <p class="ww-informers-box-854754">
+                            <a href="https://world-weather.ru/pogoda/russia/grozny/14days/">Подробный прогноз</a>
+                            <br><a href="https://world-weather.ru/pogoda/russia/izhevsk/">Подробный прогноз</a>
+                        </p>
+                    </article>
+                    <script async type="text/javascript" charset="utf-8" src="https://world-weather.ru/wwinformer.php?userid=a1d2bd486864c86dd3357ef023bb2406"></script>
+                    <style>.ww-informers-box-854754{
+                        -webkit-animation-name:ww-informers54;animation-name:ww-informers54;-webkit-animation-duration:1.5s;animation-duration:1.5s;white-space:nowrap;
+                        overflow:hidden;-o-text-overflow:ellipsis;text-overflow:ellipsis;font-size:12px;font-family:Arial;line-height:18px;text-align:center
+                        }
+                        @-webkit-keyframes ww-informers54{0%,80%{opacity:0}100%{opacity:1}}
+                        @keyframes ww-informers54{0%,80%{opacity:0}100%{opacity:1}}
+                    </style> -->
