@@ -8,7 +8,7 @@
                 <div class="information">
                     <h1 class="name">Mansur Musaev</h1>
                     <h2 class="desc">Web App Developer</h2>
-                    <a class="btn btn-cta-primary pull-right" href="http://themes.3rdwavemedia.com/" target="_blank"><i class="fa fa-paper-plane"></i> Contact Me</a>
+                    <a type="button" class="btn btn-secondary" href="{{ url_for('index') }}" role="button">Контакты</a>
                     <!-- <ul class="social">
                         <li>
                             <a href="#">
@@ -25,7 +25,7 @@
                     <form method="POST" action="">
                         {{ form.hidden_tag() }}
                         <fieldset class="form-group">
-                            <legend class="border-bottom mb-4">Иса Эзербаев</legend>
+                            <legend class="border-bottom mb-4">Форма заполнения</legend>
                             <div class="form-group">
                                 {{ form.username.label(class="form-control-label") }}
             
@@ -93,6 +93,6 @@
             </article>
         </main>
         <footer>
-            <a href="{{ url_for('about') }}">На главную</a>
+            <a type="button" class="btn btn-success"href="{{ url_for('about') }}" role="button">На главную</a>
         </footer>
     {% endblock %}

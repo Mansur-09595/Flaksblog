@@ -1,11 +1,12 @@
 import datetime
 import requests
+import bcrypt
 
 from flask import render_template, url_for, redirect, flash, request
-from flaskblog import app, brycpt, db
+from flaskblog import app, db, brycpt
 from flaskblog.forms import RegistrationForm, LoginForm
 from flaskblog.models import Flight, User
-
+from flask_login import login_user, current_user, logout_user, login_required
 
 WEATHER_TOKEN = '1e35d2f152ba4f4f8e0175010202109'
 
@@ -58,8 +59,10 @@ def index():
     return render_template("index.html", flights=flights)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route("/register", methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('about'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = brycpt.generate_password_hash(form.password.data).decode('utf-8')
@@ -71,8 +74,29 @@ def register():
     return render_template('register.html', form=form)
 
 
-
-@app.route('/login')
+@app.route("/login", methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('about'))
     form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and brycpt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('account'))
+        else:
+            flash(f'Войти не удалось. Пожалуйста, проверьте почту и пароль', 'danger')
     return render_template('login.html', form=form)
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('about'))
+
+
+@app.route("/account")
+@login_required
+def account():
+    return render_template('account.html')

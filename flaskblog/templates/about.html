@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 <title>{% block title %} Document {% endblock %}</title>
-</head>
 <body>
     {% block content %}
         <header>
@@ -9,7 +8,7 @@
                 <div class="information">
                     <h1 class="name">Mansur Musaev</h1>
                     <h2 class="desc">Web App Developer</h2>
-                    <a class="btn btn-cta-primary pull-right" href="http://themes.3rdwavemedia.com/" target="_blank"><i class="fa fa-paper-plane"></i> Contact Me</a>
+                    <a type="button" class="btn btn-secondary" href="{{ url_for('index') }}" role="button">Контакты</a>
                     <!-- <ul class="social">
                         <li>
                             <a href="#">
@@ -36,25 +35,33 @@
             </div>
         </header>
         <nav>
-                <a href="{{ url_for('index') }}">Контакты</a>
-                <a href="{{ url_for('weather') }}">Погода</a>
-                <a href="{{ url_for('register') }}">Регистрация</a>
+                <!-- <a href="{{ url_for('index') }}">Контакты</a> -->
+              {% if current_user.is_authenticated %}
+               <a type="button" class="btn btn-success"href="{{ url_for('account') }}" role="button">Аккаунт</a>
+               <a type="button" class="btn btn-secondary"href="{{ url_for('logout') }}" role="button">Выход</a>
+              {% else %}
+                <a type="button" class="btn btn-success"href="{{ url_for('login') }}" role="button">Войти</a>
+                <a type="button" class="btn btn-success"href="{{ url_for('register') }}" role="button">Регистрация</a>
+              {% endif %}
         </nav>
         <div class="sidebar">
             <div class="row_left">
                 <aside class="aboutme">
-                    ASIDE
+                    <h3> Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, sunt ipsum. Itaque, sapiente beatae. 
+                    Accusantium, quasi perspiciatis itaque non est velit quia iure veniam doloremque sit, neque excepturi quam ratione.</h3>
                 </aside>
                 <aside class="project">
-                    ASIDE
+                    <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, sunt ipsum. Itaque, sapiente beatae. 
+                    Accusantium, quasi perspiciatis itaque non est velit quia iure veniam doloremque sit, neque excepturi quam ratione.</h3>
                 </aside>
             </div>
             <div class="row_right">
                 <aside class="skills">
-                    ASIDE
+                    <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, sunt ipsum. Itaque, sapiente beatae.</h3>
                 </aside>
                 <aside class="adressme">
-                    ASIDE
+                    <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, sunt ipsum. Itaque, sapiente beatae. 
+                    Accusantium, quasi perspiciatis itaque non est velit quia iure veniam doloremque sit, neque excepturi quam ratione.</h3>
                 </aside>
             </div>
         </div>
@@ -67,7 +74,7 @@
             </article>
         </main> -->
         <footer>
-            FOOTER
+            <a type="button" class="btn btn-success"href="{{ url_for('weather') }}" role="button">Погода</a>
         </footer>
     {% endblock %}
 </body>

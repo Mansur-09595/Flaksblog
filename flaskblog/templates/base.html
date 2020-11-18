@@ -16,7 +16,7 @@
                 <div class="information">
                     <h1 class="name">Mansur Musaev</h1>
                     <h2 class="desc">Web App Developer</h2>
-                    <a class="btn btn-cta-primary pull-right" href="http://themes.3rdwavemedia.com/" target="_blank"><i class="fa fa-paper-plane"></i> Contact Me</a>
+                    <a type="button" class="btn btn-secondary" href="{{ url_for('index') }}" role="button">Контакты</a>
                     <!-- <ul class="social">
                         <li>
                             <a href="#">
@@ -45,7 +45,6 @@
         <nav>
                 <a href="{{ url_for('index') }}">Контакты</a>
                 <a href="{{ url_for('weather') }}">Погода</a>
-                <a href="{{ url_for('register') }}">Регистрация</a>
         </nav>
         <div class="sidebar">
             <div class="row_left">
