@@ -1,24 +1,32 @@
 {% extends "base.html" %}
 <title>{% block title %} Document {% endblock %}</title>
+<head>
+    <script src="https://use.fontawesome.com/a8f0d3552d.js"></script>
+    <script src="https://kit.fontawesome.com/a2920e24cd.js" crossorigin="anonymous"></script>
+</head>
 <body>
     {% block content %}
         <header>
             <div class="container">
-                <img class="avatars" src="static/images/avatar.jpg">
                 <div class="information">
-                    <h1 class="name">Mansur Musaev</h1>
-                    <h2 class="desc">Web App Developer</h2>
-                    <a type="button" class="btn btn-secondary" href="{{ url_for('index') }}" role="button">Контакты</a>
-                    <!-- <ul class="social">
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-github-square" aria-hidden="true"></i>
+                    <img class="avatars" src="static/images/avatar.jpg">
+                    <div class="infotext">
+                        <h1 class="name">Mansur Musaev</h1>
+                        <h2 class="desc">Web App Developer</h2>
+                            <a href="https://github.com/Mansur-09595/">
+                                <i class="fab fa-github" aria-hidden="true"></i>
                             </a>
-                        </li>
-                    </ul> -->
+                            <a href="https://vk.com/mansmusaev/">
+                                <i class="fab fa-vk" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://www.instagram.com/?hl=ru">
+                                <i class="fab fa-instagram" aria-hidden="true"></i>
+                            </a>
+                    </div>
                 </div>
                 <div class="account">
-                    <div role="main" class="container">
+                    <a type="button" class="btn btn-info" href="{{ url_for('index') }}" role="button">Контакты</a>
+                    <div role="main" class="cont">
                         <div class="col-md-8">
                         {% with messages = get_flashed_messages(with_categories=true) %}
                           {% if messages %}
