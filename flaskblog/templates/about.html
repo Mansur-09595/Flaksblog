@@ -45,7 +45,8 @@
         <nav>
                 <!-- <a href="{{ url_for('index') }}">Контакты</a> -->
               {% if current_user.is_authenticated %}
-               <a type="button" class="btn btn-success"href="{{ url_for('account') }}" role="button">Аккаунт</a>
+               <a type="button" class="btn btn-success" href="{{ url_for('new_post') }}" role="button">Создать пост</a>
+               <a type="button" class="btn btn-success"href="{{ url_for('account', username=current_user.username) }}" role="button">Аккаунт</a>
                <a type="button" class="btn btn-secondary"href="{{ url_for('logout') }}" role="button">Выход</a>
               {% else %}
                 <a type="button" class="btn btn-success"href="{{ url_for('login') }}" role="button">Войти</a>

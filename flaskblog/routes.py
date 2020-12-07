@@ -5,10 +5,10 @@ import os
 import secrets
 
 from PIL import Image
-from flask import render_template, url_for, redirect, flash, request
+from flask import render_template, url_for, redirect, flash, request, abort
 from flaskblog import app, db, brycpt
-from flaskblog.forms import RegistrationForm, LoginForm, AccountUpdateForm
-from flaskblog.models import Flight, User
+from flaskblog.forms import RegistrationForm, LoginForm, AccountUpdateForm, PostForm
+from flaskblog.models import Flight, User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
 WEATHER_TOKEN = '1e35d2f152ba4f4f8e0175010202109'
@@ -16,7 +16,8 @@ WEATHER_TOKEN = '1e35d2f152ba4f4f8e0175010202109'
 
 @app.route('/')
 def about():
-    return render_template('about.html')
+    posts = Post.query.all()
+    return render_template('about.html', posts=posts)
 
 
 def weather_by_city():
@@ -51,6 +52,7 @@ def weather():
 
 @app.route("/index", methods=["GET","POST"])
 def index():
+    posts = Post.query.all()
     if request.method == "POST":
         name = request.form.get('name')
         mail = request.form.get('mail')
@@ -59,7 +61,7 @@ def index():
         db.session.add(comm)
     flights = Flight.query.all()
     db.session.commit()
-    return render_template("index.html", flights=flights)
+    return render_template("index.html", flights=flights, posts=posts)
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -111,9 +113,10 @@ def save_avatar(avatar):
     return avatar_name
 
 
-@app.route('/account',  methods=['GET', 'POST'])
+@app.route('/account/<username>',  methods=['GET', 'POST'])
 @login_required
-def account():
+def account(username):
+    user = User.query.filter_by(username=username).first_or_404()
     form = AccountUpdateForm()
     if form.validate_on_submit():
         if form.avatar.data:
@@ -123,9 +126,59 @@ def account():
         current_user.email = form.email.data
         db.session.commit()
         flash('Данные пользователя были обновлены!', 'success')
-        return redirect(url_for('account'))
+        return redirect(url_for('about'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
     avatar = url_for('static', filename='profile_images/' + current_user.avatar)
-    return render_template('account.html', form=form, avatar=avatar)
+    return render_template('account.html', form=form, avatar=avatar, user=user)
+
+
+@app.route('/post/new', methods=['GET', 'POST'])
+@login_required
+def new_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Пост был создан!', 'success')
+        redirect(url_for('index'))
+    return render_template('create_post.html', form=form, legend='Создать пост')
+
+
+@app.route('/post/<int:post_id>')
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', post=post)
+
+
+@app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
+@login_required
+def update_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+        db.session.commit()
+        flash('Пост был обновлен!', 'success')
+        return redirect(url_for('post', post_id=post.id))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.content.data = post.content
+    return render_template('create_post.html', form=form, legend='Изменить пост')
+
+
+@app.route('/post/<int:post_id>/delete', methods=['POST'])
+@login_required
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Пост был удален!', 'success')
+    return redirect(url_for('index'))
