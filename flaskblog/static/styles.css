@@ -126,7 +126,8 @@ nav, footer{
 }
 
 aside {
-  background-color: cadetblue;
+  background-color: rgb(183 182 182);
+  border: 2px solid #000000;
 }
 
 body {
@@ -177,9 +178,14 @@ footer {
 }
 
 .fab:hover, .btn:hover {
-  border: 1px solid #ffffd3;
+  background-color: #b7bdb9;
+  border: 1px solid #000000;
   color:white;
   transform: scale(1.1);
+}
+
+a:hover {
+  text-decoration: none;
 }
 
 .fa-vk {
@@ -197,9 +203,11 @@ footer {
 }
 
 .btn {
-  box-shadow: 2px 2px 2px 2px #7f7a3e;
+  background-color: white;
+  color: black;
+  box-shadow: -2px 2px 2px 2px #7f7a3e;
   animation-name: rainbow;
-  border: 1px solid #ffffd3;
+  border: 1px solid #000000;
   /* animation-duration: 5s;
   animation-iteration-count: infinite; */
 }
