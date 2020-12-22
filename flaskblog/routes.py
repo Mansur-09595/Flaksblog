@@ -52,7 +52,8 @@ def weather():
 
 @app.route("/index", methods=["GET","POST"])
 def index():
-    posts = Post.query.all()
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
     if request.method == "POST":
         name = request.form.get('name')
         mail = request.form.get('mail')
@@ -126,7 +127,7 @@ def account(username):
         current_user.email = form.email.data
         db.session.commit()
         flash('Данные пользователя были обновлены!', 'success')
-        return redirect(url_for('about'))
+        return redirect(url_for('account', username=current_user.username))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
@@ -182,3 +183,13 @@ def delete_post(post_id):
     db.session.commit()
     flash('Пост был удален!', 'success')
     return redirect(url_for('index'))
+
+
+@app.route('/user/<string:username>')
+def user_posts(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(author=user)\
+        .order_by(Post.date_posted.desc()).\
+        paginate(page=page, per_page=3)
+    return render_template('user_posts.html', posts=posts, user=user)
