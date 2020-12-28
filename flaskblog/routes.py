@@ -6,10 +6,11 @@ import secrets
 
 from PIL import Image
 from flask import render_template, url_for, redirect, flash, request, abort
-from flaskblog import app, db, brycpt
-from flaskblog.forms import RegistrationForm, LoginForm, AccountUpdateForm, PostForm
+from flaskblog import app, db, brycpt, mail
+from flaskblog.forms import RegistrationForm, LoginForm, AccountUpdateForm, PostForm, RequestResetForm, ResetPasswordForm
 from flaskblog.models import Flight, User, Post
 from flask_login import login_user, current_user, logout_user, login_required
+from flask_mail import Message
 
 WEATHER_TOKEN = '1e35d2f152ba4f4f8e0175010202109'
 
@@ -193,3 +194,40 @@ def user_posts(username):
         .order_by(Post.date_posted.desc()).\
         paginate(page=page, per_page=3)
     return render_template('user_posts.html', posts=posts, user=user)
+
+
+def send_reset_mail(user):
+    token = user.get_reset_token()
+    msg = Message('Сброс пароля', recipients=[user.email])
+    msg.body = f'''Для того чтобы сбросить пароль перейдите по ссылке: 
+    {url_for('reset_token', token=token, _external=True)} 
+    Если вы не отправляли этот запрос, просто проигнорируйте это письмо, и никаких изменений не будет'''
+    mail.send(msg)
+
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        send_reset_mail(user)
+    return render_template('reset_request.html', title='Сброс пароля', form=form)
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_token_reset(token)
+    if user is None:
+        flash('Это недействительный или просроченный токен', 'warning')
+        return redirect(url_for('reset_request'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_password = brycpt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = hashed_password
+        db.session.commit()
+        flash('Ваш пароль был обновлен! Теперь вы можете войти в систему', 'success')
+        return redirect(url_for('login'))
+    return render_template('reset_token.html', title='Сброс пароля', form=form)
