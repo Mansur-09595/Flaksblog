@@ -59,3 +59,13 @@ class Post(db.Model):
 
     def __repr__(self):
         return self.title
+
+#Добавление и покупка товара БД
+class Item(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    titles = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Integer(), nullable=False)
+    isActive = db.Column(db.Boolean(), default=True)
+
+    def __repr__(self):
+        return self.titles

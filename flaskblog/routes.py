@@ -4,11 +4,12 @@ import bcrypt
 import os
 import secrets
 
+from cloudipsp import Api, Checkout
 from PIL import Image
 from flask import render_template, url_for, redirect, flash, request, abort
 from flaskblog import app, db, brycpt, mail
 from flaskblog.forms import RegistrationForm, LoginForm, AccountUpdateForm, PostForm, RequestResetForm, ResetPasswordForm
-from flaskblog.models import Flight, User, Post
+from flaskblog.models import Flight, User, Post, Item
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 
@@ -231,3 +232,40 @@ def reset_token(token):
         flash('Ваш пароль был обновлен! Теперь вы можете войти в систему', 'success')
         return redirect(url_for('login'))
     return render_template('reset_token.html', title='Сброс пароля', form=form)
+
+#Добавление и покупка товара тестим!
+@app.route('/shop')
+def shop():
+    items = Item.query.order_by(Item.price).all()
+
+    return render_template('shop.html', data=items)
+
+@app.route('/buy/<int:id>')
+def item_buy(id):
+    item = Item.query.get(id)
+
+    api = Api(merchant_id=1396424, secret_key='test')
+    checkout = Checkout(api=api)
+    data = {
+    "currency": "RUB",
+    "amount": str(item.price) + "00"
+    }
+    url = checkout.url(data).get('checkout_url')
+    return redirect(url)
+
+@app.route('/create', methods=['POST', 'GET'])
+def create():
+    if request.method == "POST":
+        titles = request.form['titles']
+        price = request.form['price']
+
+        item = Item(titles=titles, price=price)
+
+        try:
+            db.session.add(item)
+            db.session.commit()
+            return redirect(url_for('shop'))
+        except:
+            return "Получилось ошибка"
+    else:
+        return render_template('create.html')
