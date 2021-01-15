@@ -28,7 +28,7 @@
                       <a class="text-dark" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
                     </h3>
                     <div class="mb-1 text-muted"  href="{{ url_for('user_posts', username=current_user.username) }}">Автор: {{ post.author }} {{ post.date_posted.strftime('%Y-%m-%d') }}</div>
-                    <p class="card-text mb-auto">{{ post.content | length}}<span id="dots">...</span><span id="more"></span></span></p>
+                    <p class="card-text mb-auto">{{ post.content[0: 30] }}<span id="dots">...</span><span id="more">{{ post.content [30:]}}</span></span></p>
                     <button onclick="myFunction()" id="myBtn">Read more</button>
                     <a href="{{ url_for('post', post_id=post.id) }}">Continue reading</a>
                   </div>
