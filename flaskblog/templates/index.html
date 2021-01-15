@@ -2,40 +2,8 @@
 {% block title %} О нас {% endblock %}
 
     {% block content %}
-        <header>
-            <div class="container">
-                <a href="{{ url_for('about') }}"><img class="avatars" src="static/images/avatar.jpg"></a>
-                <div class="information">
-                    <h1 class="name">Mansur Musaev</h1>
-                    <h2 class="desc">Web App Developer</h2>
-                    <a type="button" class="btn btn-secondary" href="{{ url_for('index') }}" role="button">Контакты</a>
-                    <!-- <ul class="social">
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-github-square" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    </ul> -->
-                </div>
-                <div class="account">
-                    <div role="main" class="container">
-                        <div class="col-md-8">
-                        {% with messages = get_flashed_messages(with_categories=true) %}
-                          {% if messages %}
-                            {% for category, message in messages %}
-                              <div class="alert alert-{{ category }}">
-                                {{ message }}
-                              </div>
-                            {% endfor %}
-                          {% endif %}
-                        {% endwith %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <div class="sidebar">
-        {% for post in posts.items %}
+      <div class="sidebar">
+        <!-- {% for post in posts.items %}
             <article class="media content-section">
               <div class="media-body">
               <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_images/' + post.author.avatar) }}">
@@ -47,30 +15,102 @@
                 <p class="article-content">{{ post.content }}</p>
               </div>
             </article>
-        {% endfor %}
+        {% endfor %} -->
+            
+
+          <div class="row mb-2">
+            {% for post in posts.items %}
+              <div class="col-md-6">
+                <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                  <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-2 text-primary">World</strong>
+                    <h3 class="mb-0">
+                      <a class="text-dark" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
+                    </h3>
+                    <div class="mb-1 text-muted"  href="{{ url_for('user_posts', username=current_user.username) }}">Автор: {{ post.author }} {{ post.date_posted.strftime('%Y-%m-%d') }}</div>
+                    <p class="card-text mb-auto">{{ post.content | length}}<span id="dots">...</span><span id="more"></span></span></p>
+                    <button onclick="myFunction()" id="myBtn">Read more</button>
+                    <a href="{{ url_for('post', post_id=post.id) }}">Continue reading</a>
+                  </div>
+                  <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" 
+                  alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" 
+                  src="{{ url_for('static', filename='profile_images/' + post.author.avatar) }}"
+                  data-holder-rendered="true">
+                </div>
+              </div>
+              {% endfor %}
+          </div>
+
+      </div>
+      <script>
+        function myFunction() {
+          var dots = document.getElementById("dots");
+          var moreText = document.getElementById("more");
+          var btnText = document.getElementById("myBtn");
+        
+          if (dots.style.display === "none") {
+            dots.style.display = "inline";
+            btnText.innerHTML = "Read more";
+            moreText.style.display = "none";
+          } else {
+            dots.style.display = "none";
+            btnText.innerHTML = "Read less";
+            moreText.style.display = "inline";
+          }
+        }
+      </script>
 
         </div>
         <main>
-            <article>
+            <!-- <article>
                 <form  action="{{ url_for('index') }}" method="post">
                     <input type="text" name="name" placeholder="Введите ваше Имя">
                     <input type="text" name="mail" placeholder="Введите ваш @mail">
                     <input type="text" name="commen" placeholder="Оставьте отзыв">
                     <button>Отправить</button>
                 </form>
-            </article>
+            </article> -->
+            <form  action="{{ url_for('index') }}" method="post">
+              <div class="form-group">
+                <label for="usr">Name:</label>
+                <input type="text" class="form-control" id="usr" name="name">
+              </div>
+              <div class="form-group">
+                <label for="pwd">@Mail:</label>
+                <input type="mail" class="form-control" id="pwd" name="mail">
+              </div>
+              <div class="form-group">
+                <label for="comment">Comment:</label>
+                <textarea type="text" class="form-control" rows="5" id="comment" name="commen"></textarea>
+              </div>
+              <button>Отправить</button>
+            </form>
             <article>
                 <ul>
                     {% for note in notes %}s
                         <li>{{ note }}</li>
                     {% endfor %}
                 </ul>
-                <ul>
+                <!-- <ul>
                     {% for flight in flights %}
                             <li class="li">{{ flight.name }} : {{ flight.commen }}</li>
-                            <!-- {{ "%s %s"|format(flight.id, flight.origin) }}[1:-1]|replace('"', ' ') -->
+                            {{ "%s %s"|format(flight.id, flight.origin) }}[1:-1]|replace('"', ' ')
                     {% endfor %}
-                </ul>
+                </ul> -->
+                <div class="row mb-2">
+                  {% for flight in flights %}
+                    <div class="col-md-6">
+                      <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                        <div class="card-body d-flex flex-column align-items-start">
+                          <h3 class="mb-0">
+                            <a class="text-dark" href="#">{{ flight.name }}</a>
+                          </h3>
+                          <p class="card-text mb-auto">{{ flight.commen }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
             </article>
         </main>
         <footer>

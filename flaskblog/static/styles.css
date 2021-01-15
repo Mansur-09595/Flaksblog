@@ -141,7 +141,7 @@ aside {
 } */
 
 article {
-  background-color: darkgray;
+  /* background-color: darkgray; */
 }
 
 footer {
@@ -226,3 +226,10 @@ a:hover {
     top: 0px;
   }
 }
+
+img {
+  width: 150px;
+  height: 150px;
+}
+
+#more {display: none;}
