@@ -16,7 +16,6 @@
               </div>
             </article>
         {% endfor %} -->
-            
 
           <div class="row mb-2">
             {% for post in posts.items %}
@@ -28,8 +27,10 @@
                       <a class="text-dark" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
                     </h3>
                     <div class="mb-1 text-muted"  href="{{ url_for('user_posts', username=current_user.username) }}">Автор: {{ post.author }} {{ post.date_posted.strftime('%Y-%m-%d') }}</div>
-                    <p class="card-text mb-auto">{{ post.content[0: 30] }}<span id="dots">...</span><span id="more">{{ post.content [30:]}}</span></span></p>
-                    <button onclick="myFunction()" id="myBtn">Read more</button>
+                    <p class="show-more" style="text-align: left;">{{ post.content[0: 125] }}...
+                      <span>{{ post.content [125:]}}</span>
+                    </p>
+                    <button class="read-more">Read More</button>
                     <a href="{{ url_for('post', post_id=post.id) }}">Continue reading</a>
                   </div>
                   <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" 
@@ -38,11 +39,33 @@
                   data-holder-rendered="true">
                 </div>
               </div>
+              <!-- 
+              <p class="card-text mb-auto" style="text-align: left;">
+                {{ post.content[0: 125] }}
+                <span id="dots">...</span>
+                <span id="more">{{ post.content [125:]}}</span>
+              </p>
+              <button onclick="myFunction()" id="myBtn">Read more</button> -->
+              
+              <!-- <p class="show-more">{{ post.content[0: 125] }}
+                <span>{{ post.content [125:]}}</span>
+              </p>
+              <button class="read-more">Read More</button> -->
               {% endfor %}
           </div>
 
       </div>
       <script>
+        var buttons = document.querySelectorAll('.read-more');
+
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].addEventListener('click', function(event) {
+            var span = event.target.previousElementSibling.querySelector('span');
+            span.classList.add('fade-in');
+          });
+        }
+      </script>
+      <!-- <script>
         function myFunction() {
           var dots = document.getElementById("dots");
           var moreText = document.getElementById("more");
@@ -58,7 +81,8 @@
             moreText.style.display = "inline";
           }
         }
-      </script>
+      </script> -->
+
 
         </div>
         <main>
@@ -105,27 +129,40 @@
                           <h3 class="mb-0">
                             <a class="text-dark" href="#">{{ flight.name }}</a>
                           </h3>
-                          <p class="card-text mb-auto">{{ flight.commen }}</p>
+                          <p class="show-more" style="text-align: left;">{{ flight.commen[0: 100] }}
+                            <span>{{ flight.commen [100:]}}</span>
+                          </p>
+                          <button class="read-more">Read More</button>
                         </div>
                       </div>
                     </div>
                   {% endfor %}
                 </div>
+                <script>
+                  var buttons = document.querySelectorAll('.read-more');
+          
+                  for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].addEventListener('click', function(event) {
+                      var span = event.target.previousElementSibling.querySelector('span');
+                      span.classList.add('fade-in');
+                    });
+                  }
+                </script>
             </article>
         </main>
         <footer>
             <a type="button" class="btn btn-success"href="{{ url_for('about') }}" role="button">На главную</a>
         </footer>
-        {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
         {% if page_num %}
           {% if posts.page == page_num %}
             <a class="btn btn-info mb-4" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
           {% else %}
             <a class="btn btn-outline-info mb-4" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
           {% endif %}
-        {% else %}
-          ...
-        {% endif %}
+            {% else %}
+              ...
+          {% endif %}
       {% endfor %}
     {% endblock %}
     

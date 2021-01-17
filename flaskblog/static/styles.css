@@ -228,8 +228,20 @@ a:hover {
 }
 
 img {
-  width: 150px;
-  height: 150px;
+  border: 3px solid;
+  margin: 5px;
+  min-width: 200px;
+  min-height: 250px;
 }
 
-#more {display: none;}
+.show-more span {
+  display: inline-block;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 2s;
+  opacity: 0;
+}
+.show-more span.fade-in {
+  height: auto;
+  opacity: 1;
+}
