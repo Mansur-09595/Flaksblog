@@ -27,10 +27,9 @@
                       <a class="text-dark" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
                     </h3>
                     <div class="mb-1 text-muted"  href="{{ url_for('user_posts', username=current_user.username) }}">Автор: {{ post.author }} {{ post.date_posted.strftime('%Y-%m-%d') }}</div>
-                    <p class="show-more" style="text-align: left;">{{ post.content[0: 125] }}...
-                      <span>{{ post.content [125:]}}</span>
+                    <p class="showmore" style="text-align: left;">{{ post.content[0: 125]}}<span class="dots">...</span><span class="more">{{ post.content[125:]}}</span>
+                      <a>Show More</a>
                     </p>
-                    <button class="read-more">Read More</button>
                     <a href="{{ url_for('post', post_id=post.id) }}">Continue reading</a>
                   </div>
                   <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" 
@@ -39,6 +38,7 @@
                   data-holder-rendered="true">
                 </div>
               </div>
+              
               <!-- 
               <p class="card-text mb-auto" style="text-align: left;">
                 {{ post.content[0: 125] }}
@@ -56,6 +56,15 @@
 
       </div>
       <script>
+        document.querySelectorAll(".showmore").forEach(function (p) {
+          p.querySelector("a").addEventListener("click", function () {
+            p.classList.toggle("show");
+            this.textContent = p.classList.contains("show") ? "Show Less" : "Show More";
+          });
+        });
+      </script>
+
+      <!-- <script>
         var buttons = document.querySelectorAll('.read-more');
 
         for (var i = 0; i < buttons.length; i++) {
@@ -64,7 +73,8 @@
             span.classList.add('fade-in');
           });
         }
-      </script>
+      </script> -->
+
       <!-- <script>
         function myFunction() {
           var dots = document.getElementById("dots");

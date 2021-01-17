@@ -9,10 +9,22 @@
     <link rel="stylesheet", href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://use.fontawesome.com/a8f0d3552d.js"></script>
     <script src="https://kit.fontawesome.com/a2920e24cd.js" crossorigin="anonymous"></script>
+
     <title>{% block title %} Document {% endblock %}</title>
 </head>
 <body>
     {% block content %}
+    <head>
+        <script>
+            document.querySelectorAll(".showmore").forEach(function (p) {
+              p.querySelector("a").addEventListener("click", function () {
+                p.classList.toggle("show");
+                this.textContent = p.classList.contains("show") ? "Show Less" : "Show More";
+              });
+            });
+          </script>
+    </head>
+
         <header>
             <div class="container">
                 <img class="avatars" src="static/images/avatar.jpg">
