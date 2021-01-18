@@ -17,7 +17,7 @@ body {
 }
 
 header {
-  background: black;
+  background: #c5bebe;
   padding: 30px 0;
 }
 
@@ -165,8 +165,7 @@ footer {
 } */
 
 .fab, .far {
-  box-shadow: -2px 2px 2px 2px #777122;
-  border: 1px solid #ffffd3;
+  border: 1px solid #000000;
   font-size: 32px;
   transition-duration: 0.4s;
   background: black;
@@ -177,8 +176,14 @@ footer {
   overflow: hidden;
 }
 
-.fab:hover, .btn:hover {
+.btn:hover {
   background-color: #b7bdb9;
+  border: 1px solid #000000;
+  color:white;
+  transform: scale(1.1);
+}
+
+.fab:hover{
   border: 1px solid #000000;
   color:white;
   transform: scale(1.1);
@@ -227,7 +232,7 @@ a:hover {
   }
 }
 
-img {
+.card-img-right {
   border: 3px solid;
   margin: 5px;
   min-width: 200px;
