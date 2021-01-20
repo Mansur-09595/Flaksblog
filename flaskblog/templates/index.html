@@ -55,14 +55,7 @@
           </div>
 
       </div>
-      <script>
-        document.querySelectorAll(".showmore").forEach(function (p) {
-          p.querySelector("a").addEventListener("click", function () {
-            p.classList.toggle("show");
-            this.textContent = p.classList.contains("show") ? "Show Less" : "Show More";
-          });
-        });
-      </script>
+  
 
       <!-- <script>
         var buttons = document.querySelectorAll('.read-more');
@@ -148,7 +141,7 @@
                     </div>
                   {% endfor %}
                 </div>
-                <script>
+                <!-- <script>
                   var buttons = document.querySelectorAll('.read-more');
           
                   for (var i = 0; i < buttons.length; i++) {
@@ -157,7 +150,7 @@
                       span.classList.add('fade-in');
                     });
                   }
-                </script>
+                </script> -->
             </article>
         </main>
         <footer>
@@ -174,5 +167,6 @@
               ...
           {% endif %}
       {% endfor %}
+      <script src="{{ url_for('static', filename='module.js') }}"></script>
     {% endblock %}
     
