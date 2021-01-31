@@ -21,7 +21,9 @@
         <a class="p-2 text-dark" href="#">Support</a>
         <a class="p-2 text-dark" href="#">Pricing</a> -->
       </nav>
-      <a class="btn btn-outline-primary" href="{{ url_for('create') }}">Добавить товар</a>
+      {% if current_user.admin %}
+        <a class="btn btn-outline-primary" href="{{ url_for('create') }}">Добавить товар</a>
+      {% endif %}
     </header>
     
     <main class="container">

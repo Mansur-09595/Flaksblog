@@ -28,7 +28,7 @@ class User(db.Model,UserMixin):
     avatar = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(20), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
-
+    admin = db.Column(db.Boolean(), default=False)
 
     def get_reset_token(self, expires_sec=600):
         token = TimedJSONWebSignatureSerializer(app.config['SECRET_KEY'], expires_sec)
