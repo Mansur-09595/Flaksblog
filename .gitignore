@@ -7,3 +7,7 @@ env
 /env/
 env/
 env
+
+config.py
+
+__pycache__
